@@ -1,0 +1,9 @@
+.control{
+    display: grid;
+    grid-template-columns: 70px 70px 70px 70px;
+    justify-items: center;
+    justify-content: center;
+}
+.control div{
+height: 60px;
+}

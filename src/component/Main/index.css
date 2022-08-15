@@ -1,0 +1,14 @@
+.mainLayout{
+    height: 200px;
+    /* 将非CJK字符按CJK字符处理 */
+    word-wrap: break-word;
+    /* white-space: pre-line; */
+}
+.headLayout{
+    display: flex;
+    justify-content: flex-start;
+}
+.headLayout div{
+    font-size: larger;
+    flex-basis: 70px;
+}
