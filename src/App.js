@@ -67,11 +67,13 @@ function App() {
     if (isNaN(value)) {
       //加减乘除---每次执行默认前方已有确切数字且支持切换
       if (value !== "." && value !== "%") {
+        //  切换
         if (changeCalculate.current) {
           setPresentVal((oldVal) => {
             return oldVal.slice(0, oldVal.length - 1) + value;
           });
         } else {
+          //  正常添加
           setPresentVal((oldVal) => oldVal + value);
           changeCalculate.current = true;
           pointStatus.current = false;
@@ -85,6 +87,7 @@ function App() {
           pointStatus.current = true;
           changeCalculate.current = false;
           console.log(".");
+        } else if (value === "%") {
         }
       }
     } else {
@@ -110,7 +113,7 @@ function App() {
   const getResult = (calArr) => {
     //暂时以正则表达式形式提取数字/小数
     let numArr = presentVal
-      .match(/([1-9]\d*\.?\d*)|(0\.?\d*)/g)
+      .match(/([1-9]\d*\.?\d*)|(0\.?\d*)|(\.\d+)|(\d+\.$)/g)
       .map(parseFloat);
     console.log("numArr", numArr);
     let res = numArr[0];
