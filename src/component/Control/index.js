@@ -2,7 +2,7 @@ import React from "react";
 import Click from "../Click";
 import "./index.css";
 
-export default function Control({ getValue }) {
+export default function Control({ getInputValue }) {
   const button = [
     "C",
     "del",
@@ -29,7 +29,7 @@ export default function Control({ getValue }) {
     <div className="control">
       {button.map((val, index) => (
         <div key={index}>
-          <Click key={index} value={val} getValue={getValue} />
+          <Click key={index} value={val} getInputValue={getInputValue} />
         </div>
       ))}
     </div>

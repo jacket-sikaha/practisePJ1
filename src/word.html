@@ -14,6 +14,14 @@
     </style>
 </head>
 <body>
-    
+    <script>
+        let a = eval('0.1111000-0.0002+0.0001-0.0000002-999-.325/.3000-0.000-3.+4908.')
+        let b = ('0.1111000-0.0002+0.0001-0.0000002-999-.325/.3000-0.000-3.+14908./0.')
+        function looseJsonParse(obj){
+            return Function('"use strict";return (' + obj + ')')();
+            // return Function('"use strict";return ' + obj + '')();
+}
+        console.log('a',looseJsonParse(b))
+    </script>
 </body>
 </html>
