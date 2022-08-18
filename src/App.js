@@ -4,11 +4,9 @@ import "./App.css";
 import { useRef, useState } from "react";
 function App() {
   const [result, setResult] = useState(0);
-  // let calculate = useRef([]);
   let pointStatus = useRef(false);
-  // let startZeroFlag = useRef(true);
+  // 计算符号切换开关
   let changeCalculate = useRef(false);
-  // const [calculate, setCalculate] = useState([]);
   //展示数据字符串
   const [presentVal, setPresentVal] = useState("0");
 
@@ -50,7 +48,7 @@ function App() {
             // .match(/([1-9]\d*\.?\d*)|(0\.?\d*)/g)
             // 考虑了。x  和  x。 两种特殊输入
             //正则表达式获取最后一个数字形式，以此去调整pointStatus状态
-            .match(/([1-9]\d*\.?\d*)|(0\.?\d*)|(\.\d+)|(\d+\.$)/g)
+            .match(/([0-9]+\.?\d*e.\d+)|([0-9]+\.?\d*)|(\.\d+)/gm)
             .slice(-1)[0]
             .indexOf(".") >= 0
             ? (pointStatus.current = true)
@@ -64,42 +62,69 @@ function App() {
 
   const getResult = (str) => {
     try {
+      if (
+        str.slice(-1) === "+" ||
+        str.slice(-1) === "-" ||
+        str.slice(-1) === "*" ||
+        str.slice(-1) === "/"
+      ) {
+        str = str.slice(0, -1);
+      }
       setResult(parseString(str));
     } catch (error) {
       setResult("error");
     }
-    console.log(typeof parseString(str), parseString(str));
   };
 
   const changeLastNum = (str) => {
-    //判断字符串后两位是否是数字（考虑小数简写模式）
-    if (isNaN(str.slice(-2))) {
-      if (str.slice(-1) === ".") {
-        setPresentVal((oldValue) => {
-          return oldValue.slice(0, -1) + "NaN";
-        });
-      }
+    //计算符号后%无效
+    if (
+      str.slice(-1) === "+" ||
+      str.slice(-1) === "-" ||
+      str.slice(-1) === "*" ||
+      str.slice(-1) === "/"
+    ) {
+      return;
+    }
+    //计算符号 + 。  为错误输入
+    else if (/[^\d]\.$/.test(str)) {
+      setPresentVal((oldValue) => {
+        return oldValue.slice(0, -1) + "NaN";
+      });
       changeCalculate.current = false;
       pointStatus.current = false;
     } else {
-      let numArr = str.match(/([1-9]\d*\.?\d*)|(0\.?\d*)|(\.\d+)|(\d+\.$)/g);
-      //只有一串数字时
+      // let numArr = str.match(/([1-9]\d*\.?\d*)|(0\.?\d*)|(\.\d+)|(\d+\.$)/g);
+      let numArr = str.match(/([0-9]+\.?\d*e.\d+)|([0-9]+\.?\d*)|(\.\d+)/gm);
 
       //获取最后一串数字
       const lastNum = numArr.slice(-1)[0];
+      //最后一串数字前的字符串
       const exactPre = str.slice(0, -lastNum.length);
-      console.log(" ", exactPre);
-      console.log("lastNum", lastNum);
+      const exactPreLastChar = exactPre.slice(-1);
       if (parseFloat(lastNum) === 0) {
         //小数，整数 的0整理格式
         setPresentVal(exactPre + "0");
         changeCalculate.current = false;
         pointStatus.current = false;
-      } else if (numArr.length === 1) {
-        setPresentVal((parseFloat(str) / 100).toString());
       }
-
-      console.log("sss ", parseFloat(lastNum));
+      //只有一串数字时 或者 最后一个计算符号为/ | *
+      else if (
+        numArr.length === 1 ||
+        exactPreLastChar === "/" ||
+        exactPreLastChar === "*"
+      ) {
+        let newLastNum = (parseFloat(lastNum) / 100).toString();
+        pointStatus.current = /\./.test(newLastNum);
+        setPresentVal(exactPre + newLastNum);
+      }
+      //最后一个计算符号为 +  -
+      else {
+        let preResult = parseString(exactPre.slice(0, -1));
+        let newLastNum = ((parseFloat(lastNum) / 100) * preResult).toString();
+        pointStatus.current = /\./.test(newLastNum);
+        setPresentVal(exactPre + newLastNum);
+      }
     }
   };
 
@@ -121,7 +146,7 @@ function App() {
       default:
         //存在NaN 不能添加任何参数
         if (presentVal.indexOf("NaN") > 0) {
-          console.log(" ", 2222);
+          console.log(" NaN", 2222);
           return;
         }
         if (isNaN(value)) {
@@ -153,7 +178,7 @@ function App() {
           //add number
           let lastNum = parseFloat(
             presentVal
-              .match(/([1-9]\d*\.?\d*)|(0\.?\d*)|(\.\d+)|(\d+\.$)/g)
+              .match(/([0-9]+\.?\d*e.\d+)|([0-9]+\.?\d*)|(\.\d+)/gm)
               .slice(-1)[0]
           );
 
