@@ -1,14 +1,23 @@
 .mainLayout{
-    height: 200px;
+    height: 150px;
     /* 将非CJK字符按CJK字符处理 */
     word-wrap: break-word;
     /* white-space: pre-line; */
+    padding: 0 20px 0 20px;
+    text-align: right;
+}
+.resultLayout{
+    text-align: right;
+    padding: 0 20px 0 20px;
+    font-size: large;
 }
 .headLayout{
     display: flex;
     justify-content: flex-start;
+    
 }
 .headLayout div{
     font-size: larger;
     flex-basis: 70px;
+    font-weight: 200;
 }

@@ -9,7 +9,7 @@ export default function Main({ presentVal, result }) {
         <div>税贷</div>
       </div>
       <div className="mainLayout">{presentVal}</div>
-      <div>= {result}</div>
+      <div className="resultLayout">= {result}</div>
     </div>
   );
 }

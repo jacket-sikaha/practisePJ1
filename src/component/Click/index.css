@@ -1,6 +1,12 @@
 .items{
-    height: 50px;
-    /* width: 80px; */
+    height: 60px;
+    width: 60px;
     display: flex;
+    justify-content: center;
     align-items: center;
+}
+.items:active{
+    background: rgba(134, 134, 134, 0.2);
+    border: 0px;
+    border-radius: 50%;
 }
