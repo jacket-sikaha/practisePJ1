@@ -23,15 +23,15 @@ export default function App() {
       <Link to={"/test2"}>test2</Link>
       <br></br>
       <Link to={"/route-father"}>route-father</Link>
-      <br></br>
-      <Link to={"/proComponents"}>proComponents</Link>
+      {/* <br></br>
+      <Link to={"/proComponents"}>proComponents</Link> */}
 
       <hr></hr>
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/calculation" element={<Calculation />}></Route>
-        <Route path="/proComponents" element={<ProComponents />}></Route>
+        {/* <Route path="/proComponents" element={<ProComponents />}></Route> */}
 
         {/* search-param传参方法 就不需要额外的路由配置*/}
         <Route path="/test" element={<Test />}></Route>
