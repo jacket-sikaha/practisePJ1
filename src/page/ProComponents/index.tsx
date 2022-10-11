@@ -1,4 +1,3 @@
-import React from "react";
 import type { ProFormInstance } from "@ant-design/pro-components";
 import {
   ProForm,
@@ -61,13 +60,7 @@ const treeData = [
   },
 ];
 
-export default function ProComponents() {
-  // return (
-  //   <>
-  //     <div>ProComponents</div>
-
-  //   </>
-  // );
+const ProComponents = () => {
   const formRef = useRef<
     ProFormInstance<{
       name: string;
@@ -285,4 +278,6 @@ export default function ProComponents() {
       </ProFormList>
     </ProForm>
   );
-}
+};
+
+export default ProComponents;
