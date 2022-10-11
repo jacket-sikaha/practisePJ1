@@ -8,6 +8,8 @@ import Test2 from "./page/Test2";
 import Routefather from "./page/Route-father";
 import RouteA from "./page/Route-child1";
 import RouteB from "./page/Route-child2";
+import Error from "./page/Error";
+import ProComponents from "./page/ProComponents";
 //路由配置
 export default function App() {
   return (
@@ -21,13 +23,20 @@ export default function App() {
       <Link to={"/test2"}>test2</Link>
       <br></br>
       <Link to={"/route-father"}>route-father</Link>
+      <br></br>
+      <Link to={"/proComponents"}>proComponents</Link>
+
+      <hr></hr>
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/calculation" element={<Calculation />}></Route>
+        <Route path="/proComponents" element={<ProComponents />}></Route>
+
         {/* search-param传参方法 就不需要额外的路由配置*/}
         <Route path="/test" element={<Test />}></Route>
-        {/* 对于不带参数的情况，有显示需求的话就需要设置对应路由 */}
+
+        {/* 对于访问不带参数的路由情况，有显示需求的话就需要设置对应路由 */}
         <Route path="/test2" element={<Test2 />}></Route>
         {/* param传参方法 所需要的路由配置*/}
         <Route path="/test2/:id/:name" element={<Test2 />}></Route>
@@ -40,7 +49,7 @@ export default function App() {
         </Route>
 
         {/* 404路由 以上路由无法匹配的时候，该路由负责兜底*/}
-        <Route path="*" element={<Calculation />}></Route>
+        <Route path="*" element={<Error />}></Route>
       </Routes>
     </BrowserRouter>
   );

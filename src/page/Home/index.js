@@ -12,7 +12,7 @@ export default function Home() {
   };
   const gotest2 = () => {
     navigate("/test2/123/sikara/");
-    //路由的跳转与匹配遵循一一对应   多一个少一个可能就会跳转失败  如以下情况
+    //路由的跳转与匹配遵循一一对应   多一个少一个可能就会跳转失败  如以下情况不对应就跳转失败
     // navigate("/test2/123/sikara/dvsd");
   };
   return (
