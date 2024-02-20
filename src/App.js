@@ -9,7 +9,7 @@ import Routefather from "./page/Route-father";
 import RouteA from "./page/Route-child1";
 import RouteB from "./page/Route-child2";
 import Error from "./page/Error";
-import ProComponents from "./page/ProComponents";
+
 //路由配置
 export default function App() {
   return (
