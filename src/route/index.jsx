@@ -9,7 +9,7 @@ import RouteA from "../page/Route-child1";
 import RouteB from "../page/Route-child2";
 import Routefather from "../page/Route-father";
 
-// 类似js配置写法
+// 原来的JSX 路由写法 => 类似js配置写法
 // 基本上就是用一个新的root路由包裹原来routes下面的route路由，然后就是一个路由数组对象
 const router = createBrowserRouter([
   {
@@ -24,7 +24,13 @@ const router = createBrowserRouter([
       },
       {
         path: "calculation",
-        element: <Calculation />,
+        // element: <Calculation />,
+        lazy: () => import("../page/Calculation"),
+        // async lazy() {
+        //   let cm = await import("../page/Calculation");
+        //   // console.log("cm", cm); // 只会在第一次跳转执行
+        //   return { Component: cm.default };
+        // },
       },
       /* search-param传参方法 就不需要额外的路由配置*/
       {
@@ -43,7 +49,15 @@ const router = createBrowserRouter([
       // 子路由配置  就是单纯的路由嵌套
       {
         path: "route-father",
-        element: <Routefather />,
+        // element: <Routefather />,
+        loader: async () => {
+          return fetch("https://jsonplaceholder.typicode.com/todos/1");
+        },
+        // lazy: () => import("../page/Route-father"),
+        async lazy() {
+          let cm = await import("../page/Route-father");
+          return { Component: cm.default };
+        },
         children: [
           { index: true, element: <RouteA /> },
           {
