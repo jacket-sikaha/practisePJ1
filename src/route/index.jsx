@@ -51,18 +51,22 @@ const router = createBrowserRouter([
       // 子路由配置  就是单纯的路由嵌套
       {
         path: "route-father",
-        // element: <Routefather />,
+        element: <Routefather />,
         // lazy: () => import("../page/Route-father"),
         async lazy() {
           let cm = await import("../page/Route-father");
-          return { loader: cm.loader, Component: cm.default };
+          // return { loader: cm.loader, Component: cm.default };
           return { Component: cm.default };
         },
         children: [
-          { index: true, element: <RouteA /> },
+          {
+            index: true,
+            element: <RouteA />,
+          },
           {
             path: "b",
             element: <RouteB />,
+            // loader: testAPI
           },
         ],
       },
