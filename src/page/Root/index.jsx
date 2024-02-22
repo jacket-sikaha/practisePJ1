@@ -6,19 +6,18 @@ function Root() {
   return (
     <>
       {/* 导航栏 */}
-      <Link to={"/"}>首页</Link>
+      <Link to={"/a"}>首页</Link>
       <br></br>
-      <Link to={"/calculation"}>计算器</Link>
+      <Link to={"/a/q"}>q</Link>
       {/* <a href={"/calculation"}>计算器</a> */}
       <br></br>
-      <Link to={"/test"}>test</Link>
+      <Link to={"/a/q/w"}>test</Link>
       <br></br>
-      <Link to={"/test2"}>test2</Link>
+      <Link to={"/a/q/w/e"}>test2</Link>
       <br></br>
       {/* <Link to={"/route-father"}>route-father</Link> */}
-      <a href={"/route-father"}>route-father</a>
+      <a href={"/a/q/w/e/r"}>route-father</a>
       <br></br>
-      <Link to={"/404"}>404</Link>
       <hr />
       {/* root的子路由输出位置 */}
       <Outlet />

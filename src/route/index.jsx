@@ -16,62 +16,166 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    /* 错误页面组件 所有路由无法匹配的时候，该路由负责兜底 */
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "calculation",
-        // element: <Calculation />,
-        // lazy: () => import("../page/Calculation"),
-        loader: testAPI,
+        // index: true,
+        // 索引路由是指根据路径匹配到的默认路由，相当于根路径或基本路径。索引路由不应具有子元素，因为它们不会被渲染
+        path: "a",
+        // element: <Home />,
         async lazy() {
-          let cm = await import("../page/Calculation");
-          // console.log("cm", cm); // 只会在第一次跳转执行
-          return { Component: cm.default };
-        },
-      },
-      /* search-param传参方法 就不需要额外的路由配置*/
-      {
-        path: "test",
-        element: <Test />,
-      },
-      /* 对于访问不带参数的路由情况，有显示需求的话就需要设置对应路由 */
-      {
-        path: "test2",
-        element: <Test2 />,
-      },
-      /* param传参方法 所需要的路由配置*/ {
-        path: "test2/:id/:name",
-        element: <Test2 />,
-      },
-      // 子路由配置  就是单纯的路由嵌套
-      {
-        path: "route-father",
-        element: <Routefather />,
-        // lazy: () => import("../page/Route-father"),
-        async lazy() {
-          let cm = await import("../page/Route-father");
-          // return { loader: cm.loader, Component: cm.default };
+          let cm = await import("../page/Home");
           return { Component: cm.default };
         },
         children: [
           {
-            index: true,
-            element: <RouteA />,
-          },
-          {
-            path: "b",
-            element: <RouteB />,
-            // loader: testAPI
+            path: "q",
+            // element: <RouteA />,
+            async lazy() {
+              let cm = await import("../page/Route-child1");
+              return { Component: cm.default };
+            },
+            loader: () =>
+              fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+            children: [
+              {
+                path: "w",
+                // element: <RouteB />,
+                async lazy() {
+                  let cm = await import("../page/Route-child2");
+                  return { Component: cm.default };
+                },
+                loader: () =>
+                  fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+                children: [
+                  {
+                    path: "e",
+                    // element: <RouteA />,
+                    async lazy() {
+                      let cm = await import("../page/Route-child1");
+                      return { Component: cm.default };
+                    },
+                    loader: () =>
+                      fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+                    children: [
+                      {
+                        path: "r",
+                        // element: <RouteB />,
+                        async lazy() {
+                          let cm = await import("../page/Route-child2");
+                          return { Component: cm.default };
+                        },
+                        loader: () =>
+                          fetch(
+                            "https://jsonplaceholder.typicode.com/todos/" + 6
+                          ),
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
+      },
+      {
+        path: "aa",
+        element: <Calculation />,
       },
     ],
   },
 ]);
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Root />,
+//     errorElement: <ErrorPage />,
+//     children: [
+//       {
+//         // index: true,
+//         // 索引路由是指根据路径匹配到的默认路由，相当于根路径或基本路径。索引路由不应具有子元素，因为它们不会被渲染
+//         path: "a",
+//         element: <Home />,
+//         children: [
+//           {
+//             path: "q",
+//             element: <RouteA />,
+//             loader: () =>
+//               fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+//             children: [
+//               {
+//                 path: "w",
+//                 element: <RouteB />,
+//                 loader: () =>
+//                   fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+//                 children: [
+//                   {
+//                     path: "e",
+//                     element: <RouteA />,
+//                     loader: () =>
+//                       fetch("https://jsonplaceholder.typicode.com/todos/" + 6),
+//                     children: [
+//                       {
+//                         path: "r",
+//                         element: <RouteB />,
+//                         loader: () =>
+//                           fetch(
+//                             "https://jsonplaceholder.typicode.com/todos/" + 6
+//                           ),
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//       {
+//         path: "aa",
+//         element: <Calculation />,
+//       },
+//     ],
+//   },
+// ]);
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Root />,
+//     errorElement: <ErrorPage />,
+//     children: [
+//       {
+//         path: "a",
+//         element: <Home />,
+//         children: [
+//           {
+//             path: "q",
+//             element: <RouteA />,
+//             children: [
+//               {
+//                 path: "w",
+//                 element: <RouteB />,
+//                 children: [
+//                   {
+//                     path: "e",
+//                     element: <RouteA />,
+//                     children: [
+//                       {
+//                         path: "r",
+//                         element: <RouteB />,
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ]);
 
 export default router;
