@@ -6,3 +6,10 @@ export const testAPI = async () => {
   );
   return await Promise.all(res.map((item) => item.json()));
 };
+// 添加一个固定的延迟时间，以便你可以看到加载状态
+export async function delayForDemo(promise) {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000);
+  });
+  return promise;
+}

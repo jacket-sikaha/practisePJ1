@@ -18,7 +18,7 @@ export default function Home() {
   };
 
   // useEffect(() => {
-  //   fetch("https://jsonplaceholder.typicode.com/todos/" + 6);
+  //   fetch("https://t.mwm.moe/mp");
   // }, []);
 
   return (
